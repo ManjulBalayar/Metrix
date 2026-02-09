@@ -1,2 +1,23 @@
-# virtual environment
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
 venv/
+.env/
+
+# Editors
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Pytest / tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
