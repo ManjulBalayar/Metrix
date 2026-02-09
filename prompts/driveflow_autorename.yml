@@ -1,8 +1,12 @@
 prompt_id: driveflow_autorename
 version: 1.1.0
+status: prod
 description: Rename file based on OCR content with strict filename rules.
 owner: manjul
 tags: [driveflow, renaming]
+
+created_at: "2026-02-01T14:32:00Z"
+updated_at: "2026-02-08T19:10:00Z"
 
 model:
   provider: openai
@@ -37,3 +41,4 @@ user_prompt_template: |
   {{original_filename}}
 
   Generate a concise filename following the rules.
+

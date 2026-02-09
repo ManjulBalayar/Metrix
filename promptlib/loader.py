@@ -53,9 +53,18 @@ def load_yml(file):
 #Usage
 if __name__ == "__main__":
     data = load_yml("prompts/driveflow_autorename.yml")
+    
+    data2 = load_yml("prompts/support_ticket_triage.yml")
 
     if data is not None:
         print("Successfully loaded the YAML file:")
         print(data)
     else:
         print("Failed to load YAML file")
+
+    if data2 is not None:
+        print("Successfully loaded the YAML file:")
+        print(data2)
+    else:
+        print("Failed to load YAML file")
+

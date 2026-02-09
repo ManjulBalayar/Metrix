@@ -1,0 +1,60 @@
+prompt_id: support_ticket_triage
+version: 0.3.0
+status: staging
+description: Classify incoming support messages into department and priority with strict JSON output.
+owner: manjul
+tags: [support, triage, classification]
+
+created_at: "2026-02-06T03:10:00Z"
+updated_at: "2026-02-08T21:05:00Z"
+
+model:
+  provider: openai
+  name: gpt-4o-mini
+  temperature: 0.0
+  max_tokens: 120
+
+inputs:
+  user_message:
+    type: string
+    required: true
+  customer_plan:
+    type: string
+    required: false
+    default: "free"
+  language:
+    type: string
+    required: false
+    default: "en"
+
+output:
+  format: json
+  json_schema:
+    type: object
+    additionalProperties: false
+    required: [department, priority, confidence, summary]
+    properties:
+      department:
+        type: string
+        enum: [billing, technical, account, sales, other]
+      priority:
+        type: string
+        enum: [p0, p1, p2, p3]
+      confidence:
+        type: number
+        minimum: 0
+        maximum: 1
+      summary:
+        type: string
+        maxLength: 200
+
+system_prompt: |
+  You are a support triage assistant. Output MUST be valid JSON that matches the schema.
+
+user_prompt_template: |
+  Classify the message.
+
+  Message: {{user_message}}
+  Customer plan: {{customer_plan}}
+  Language: {{language}}
+
