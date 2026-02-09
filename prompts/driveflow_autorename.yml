@@ -1,0 +1,39 @@
+prompt_id: driveflow_autorename
+version: 1.1.0
+description: Rename file based on OCR content with strict filename rules.
+owner: manjul
+tags: [driveflow, renaming]
+
+model:
+  provider: openai
+  name: gpt-4o-mini
+  temperature: 0.2
+  max_tokens: 120
+
+inputs:
+  ocr_text:
+    type: string
+    required: true
+  original_filename:
+    type: string
+    required: true
+
+output:
+  format: filename
+  rules:
+    - "Return ONLY the filename, no quotes."
+    - "Use Title Case."
+    - "Max 80 characters."
+    - "No special chars except dash and underscore."
+
+system_prompt: |
+  You are a precise file renaming assistant. Follow output rules strictly.
+
+user_prompt_template: |
+  OCR_TEXT:
+  {{ocr_text}}
+
+  ORIGINAL_FILENAME:
+  {{original_filename}}
+
+  Generate a concise filename following the rules.
