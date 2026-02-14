@@ -34,9 +34,9 @@ class Output(BaseModel):
     format: str # like "filename", "json", "text", "markdown"
 
     # Optional fields for different output types
-    rules: List[str] = Field(min_length=1) # At least 1 rule from user
-    json_schema: Optional[List[str]] = None
-    schema: Optional[Dict[str, Any]] = None # alternate to json_schema
+    rules: Optional[List[str]] = None 
+    json_schema: Optional[Dict[str, Any]] = None
+    output_schema: Optional[Dict[str, Any]] = None # alternate to json_schema
     constraints: Optional[Dict[str, Any]] = None
     example: Optional[str] = None
 
@@ -55,7 +55,7 @@ class Output(BaseModel):
         if not has_spec:
             raise ValueError(
                 'Output must have at least one specification: '
-                'rules, json_schema, schema, constraints, or example'
+                'rules, json_schema, output_schema, constraints, or example'
             )
         return self
 

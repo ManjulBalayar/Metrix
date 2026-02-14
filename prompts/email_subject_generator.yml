@@ -1,0 +1,61 @@
+prompt_id: email_subject_generator
+version: 1.0.0
+status: prod
+description: Generate engaging email subject lines based on email content and target audience.
+owner: manjul
+tags: [email, marketing, copywriting]
+created_at: "2026-02-10T09:00:00Z"
+updated_at: "2026-02-10T09:00:00Z"
+
+model:
+  provider: openai
+  name: gpt-4o-mini
+  temperature: 0.7
+  max_tokens: 100
+
+inputs:
+  email_body:
+    type: string
+    required: true
+    description: The main content of the email
+  
+  target_audience:
+    type: string
+    required: false
+    default: "general"
+    description: Who is receiving this email
+  
+  tone:
+    type: string
+    required: false
+    default: "professional"
+    description: Desired tone (professional, casual, urgent, friendly)
+  
+  max_length:
+    type: int
+    required: false
+    default: 60
+    description: Maximum character length for subject line
+
+output:
+  format: text
+  rules:
+    - "Generate 3 subject line options"
+    - "Each on a new line, numbered"
+    - "Stay under max_length characters"
+    - "Match the specified tone"
+    - "Make it compelling and clear"
+
+system_prompt: |
+  You are an expert email copywriter. Generate concise, engaging subject lines that increase open rates.
+  Follow the output rules strictly.
+
+user_prompt_template: |
+  EMAIL CONTENT:
+  {{email_body}}
+  
+  TARGET AUDIENCE: {{target_audience}}
+  TONE: {{tone}}
+  MAX LENGTH: {{max_length}} characters
+  
+  Generate 3 compelling subject line options.
