@@ -53,6 +53,43 @@ class PromptRenderer:
         user_prompt = self.render_user_prompt(user_inputs)
         return f"{self.prompt.system_prompt}{user_prompt}"
 
-    def to_api_request(self, user_inputs: Dict) -> Dict:
-        # Build API paylod
+    def to_groq_format(self, user_inputs: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Get it into groq, or Llama 3.1 8b format cuz it's free ¯\_(ツ)_/¯
+        """
+
         pass
+
+    def to_openai_format(self, user_inputs: Dict[str, Any]) -> Dict[str, Any]:
+        pass
+
+    def to_api_request(self, user_inputs: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Choosing the right API format based on the provider chosen by
+        the user.
+
+        User needs to specify the following in their yml file:
+        - provider (e.g., openai, anthropic)
+        - model (e.g., gpt-4o-mini)
+        - temperature & max_tokens
+        """
+        provider = self.prompt.model.provider.lower()
+
+        if provider == "openai":
+            return self.to_openai_format(user_inputs)
+        elif provider == "groq":
+            return self.to_groq_format(user_inputs)
+
+    def get_metadata(self) -> Dict[str, Any]:
+        """
+        Getting the metadata for logging and tracking purposes.
+        """
+        return {
+            "prompt_id": self.prompt.prompt_id,
+            "version": self.prompt.version,
+            "status": self.prompt.status,
+            "owner": self.prompt.owner,
+            "tags": self.prompt.owner,
+            "provider": self.prompt.model.provider,
+            "model": self.prompt.model.name
+        }
